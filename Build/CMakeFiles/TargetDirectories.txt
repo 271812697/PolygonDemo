@@ -1,8 +1,0 @@
-E:/c++/PolygonDemo/Build/CMakeFiles/ALL_BUILD.dir
-E:/c++/PolygonDemo/Build/CMakeFiles/ZERO_CHECK.dir
-E:/c++/PolygonDemo/Build/Source/CMakeFiles/PolygonDemo.dir
-E:/c++/PolygonDemo/Build/Extern/CMakeFiles/imgui.dir
-E:/c++/PolygonDemo/Build/Extern/CMakeFiles/glad.dir
-E:/c++/PolygonDemo/Build/Extern/glfw/CMakeFiles/ALL_BUILD.dir
-E:/c++/PolygonDemo/Build/Extern/glfw/src/CMakeFiles/glfw.dir
-E:/c++/PolygonDemo/Build/Extern/glfw/src/CMakeFiles/update_mappings.dir

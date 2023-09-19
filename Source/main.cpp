@@ -159,28 +159,27 @@ void Draw() {
             maindraw.DrawSolidCircle({ it1.x,it1.y }, 0.5, { 0,0 }, { 1.0,0.0,0.0,1.0 });
         }
         maindraw.DrawSolidPolygon((Vec2*)it.m_vertices.data(), it.m_vertices.size(), { 1.0,0.0,1.0,1.0 });
-        //tree->CreateProxy(it.GetAABB(), nullptr);
     }
 
     auto p1 = DividePolygonFromOrderVertexs(poly1.m_vertices);
     auto p2 = DividePolygonFromOrderVertexs(poly2.m_vertices);
 
     for (auto it : p1) {
-
         maindraw.DrawSolidPolygon((Vec2*)it.data(), it.size(), { 1.0,1.0,0.0,1.0 });
     }
     for (auto it : p2) {
         maindraw.DrawSolidPolygon((Vec2*)it.data(), it.size(), { 0.0,1.0,1.0,1.0 });
     }
     for (auto it : polyarr) {
-        maindraw.DrawSolidPolygon((Vec2*)it.m_vertices.data(), it.m_vertices.size(), { 0.133,0.69,0.29,1.0 });
+        auto p = DividePolygonFromOrderVertexs(it.m_vertices);
+        for(auto it1:p)
+              maindraw.DrawSolidPolygon((Vec2*)it1.data(), it1.size(), { 0.133,0.69,0.29,1.0 });
     }
     if (drawoption.drawAABB) {
-    for (auto box : tree->GetAllAABB()) {
-      maindraw.DrawAABB((AABB*)(&box), {0.0,0.0,1.0,1.0});
+       for (auto box : tree->GetAllAABB()) {
+           maindraw.DrawAABB((AABB*)(&box), {0.0,0.0,1.0,1.0});
+       }
     }
-    }
-
     maindraw.Flush();
 }
 

@@ -74,15 +74,15 @@ bool VertexCmp(const Vertex& a, const Vertex& b, const Vertex& center) {
 std::vector<Vertex> IntersectionPolygon(struct Polygon polygon1, struct Polygon polygon2) {
     std::vector<LineSegment>line1 = polygon1.Edges();
     std::vector<LineSegment>line2 = polygon2.Edges();
-    //如果两个多边形存在线段相交，则返回相交
+    //两个多边形线段相交的交点
     std::vector<Vertex> ans = IntersectionPloygonLines(line1, line2);
 
-    //判断两个多边形的互相包含的点
+    //两个多边形的互相包含的顶点
     std::vector<Vertex> l1 = PolygonInPolygon(polygon1, line2);
     std::vector<Vertex> l2 = PolygonInPolygon(polygon2, line1);
     ans.insert(ans.end(), l1.begin(), l1.end());
     ans.insert(ans.end(), l2.begin(), l2.end());
-    //冒泡排序
+    //冒泡排序，重新组装成一个凸多边形
     if (ans.size() != 0) {
         Vertex center = { 0,0 };
         float x = 0, y = 0;

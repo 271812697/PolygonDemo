@@ -34,6 +34,7 @@ struct Vertex {
     float x;
     float y;
 };
+using Vec2 = Vertex;
 /*
 *  顶点的运算重载操作符
 */
@@ -61,8 +62,6 @@ inline bool operator != (const Vertex& a, const Vertex& b)
 {
     return a.x != b.x || a.y != b.y;
 }
-using Vec2 = Vertex;
-
 template <typename T>
 inline T Min(T a, T b)
 {
@@ -91,7 +90,8 @@ inline Vec2 Max(const Vec2& a, const Vec2& b)
 */
 struct AABB
 {
-
+    Vec2 lowerBound;
+    Vec2 upperBound;
     bool IsValid() const {
         Vec2 d = upperBound - lowerBound;
         bool valid = d.x >= 0.0f && d.y >= 0.0f;
@@ -141,10 +141,6 @@ struct AABB
         result = result && aabb.upperBound.y <= upperBound.y;
         return result;
     }
-
-
-    Vec2 lowerBound;	///< the lower vertex
-    Vec2 upperBound;	///< the upper vertex
 };
 struct LineSegment {
     Vertex p1;

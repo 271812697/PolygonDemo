@@ -4,7 +4,7 @@
 DynamicTree::DynamicTree()
 {
     m_root = -1;
-
+    //使用顺序数组模拟链表
     m_nodeCapacity = 16;
     m_nodeCount = 0;
     m_nodes = (TreeNode*)malloc(m_nodeCapacity * sizeof(TreeNode));
@@ -31,7 +31,8 @@ DynamicTree::~DynamicTree()
 //从m_nodes数组中freelist链表分配一个节点（返回其索引）
 int DynamicTree::AllocateNode()
 {
-    // Expand the node pool as needed.
+
+    //扩容操作
     if (m_freeList == -1)
     {
         assert(m_nodeCount == m_nodeCapacity);
@@ -237,7 +238,7 @@ void DynamicTree::InsertLeaf(int leaf)
     }
 
 }
-
+//移除一个叶节点
 void DynamicTree::RemoveLeaf(int leaf)
 {
     if (leaf == m_root)
@@ -261,7 +262,6 @@ void DynamicTree::RemoveLeaf(int leaf)
 
     if (grandParent != -1)
     {
-        // Destroy parent and connect sibling to grandParent.
         if (m_nodes[grandParent].child1 == parent)
         {
             m_nodes[grandParent].child1 = sibling;
@@ -317,7 +317,6 @@ int DynamicTree::Balance(int iA)
 
     int balance = C->height - B->height;
 
-    // Rotate C up
     if (balance > 1)
     {
         int iF = C->child1;
@@ -327,12 +326,9 @@ int DynamicTree::Balance(int iA)
         assert(0 <= iF && iF < m_nodeCapacity);
         assert(0 <= iG && iG < m_nodeCapacity);
 
-        // Swap A and C
         C->child1 = iA;
         C->parent = A->parent;
         A->parent = iC;
-
-        // A's old parent should point to C
         if (C->parent != -1)
         {
             if (m_nodes[C->parent].child1 == iA)
@@ -350,7 +346,6 @@ int DynamicTree::Balance(int iA)
             m_root = iC;
         }
 
-        // Rotate
         if (F->height > G->height)
         {
             C->child2 = iF;
@@ -377,7 +372,6 @@ int DynamicTree::Balance(int iA)
         return iC;
     }
 
-    // Rotate B up
     if (balance < -1)
     {
         int iD = B->child1;
@@ -387,12 +381,10 @@ int DynamicTree::Balance(int iA)
         assert(0 <= iD && iD < m_nodeCapacity);
         assert(0 <= iE && iE < m_nodeCapacity);
 
-        // Swap A and B
         B->child1 = iA;
         B->parent = A->parent;
         A->parent = iB;
 
-        // A's old parent should point to B
         if (B->parent != -1)
         {
             if (m_nodes[B->parent].child1 == iA)
@@ -410,7 +402,6 @@ int DynamicTree::Balance(int iA)
             m_root = iB;
         }
 
-        // Rotate
         if (D->height > E->height)
         {
             B->child2 = iD;

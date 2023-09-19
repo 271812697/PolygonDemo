@@ -1,6 +1,4 @@
-﻿
-
-#include "imgui.h"
+﻿#include "imgui.h"
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 #include <iostream>
@@ -231,7 +229,7 @@ int main()
 
     poly1.m_vertices = { {10,10} ,{20,10},{20,20},{10,20} };
     poly2.m_vertices = { {0,0} ,{-10,-10},{15,0},{-10,10},{-20,10} };
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 3; i++) {
         struct Polygon p;
         int num = rand()%5+3;
         

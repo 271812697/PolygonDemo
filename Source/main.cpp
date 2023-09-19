@@ -4,14 +4,14 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 #include <iostream>
-#include<glad/glad.h>
-#include<GLFW/glfw3.h>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
-#include"DebugDraw.h"
-#include<math.h>
-#include "Vertex.h"
-#include "Polygon.h"
-#include"Dynamic_Tree.h"
+#include "DebugDraw/DebugDraw.h"
+#include  <math.h>
+#include "Polygon/Vertex.h"
+#include "Polygon/Polygon.h"
+#include "Polygon/Dynamic_Tree.h"
 #include<vector>
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 600
@@ -19,6 +19,7 @@
 #pragma region 多边形相交问题
 
 struct Polygon poly1, poly2;
+std::vector<struct Polygon>polyarr;
 DynamicTree* tree=nullptr;
 #pragma endregion
 
@@ -26,6 +27,9 @@ bool rightMouseDown = false;
 bool leftMouseDown = false;
 Vertex clickPointWS;
 std::vector<Vertex*>v_capture;
+struct DrawOptions {
+    bool drawAABB = false;
+}drawoption;
 void g_mainWindow(GLFWwindow* window, int w, int h) {
     glViewport(0, 0, w, h);
     g_camera.m_width = w;
@@ -99,6 +103,16 @@ void mouseButton(GLFWwindow* window, int B, int S, int F) {
                     v_capture.push_back(&it);
                 }
             }
+            for (auto& it1 : polyarr) {
+                for (auto& it : it1.m_vertices) {
+                float deltax = it.x - clickPointWS.x;
+                float deltay = it.y - clickPointWS.y;
+                float delta = deltax * deltax + deltay * deltay;
+                if (delta < 0.1 * g_camera.m_zoom) {
+                    v_capture.push_back(&it);
+                }
+                }
+            }
         }
         if (S == GLFW_RELEASE) {
             leftMouseDown = false;
@@ -134,15 +148,18 @@ void Draw() {
     tree = new DynamicTree();
     tree->CreateProxy(poly1.GetAABB(),&poly1);
     tree->CreateProxy(poly2.GetAABB(),&poly2);
+    for (auto& it : polyarr) {
+        tree->CreateProxy(it.GetAABB(), &it);
+    }
     std::vector<struct Polygon> ans;
     tree->Query(ans, poly1);
-    //std::vector<struct Polygon> ans= IntersectionPolygons(poly1, poly2);
+
     for (auto& it : ans) {
         for (auto it1 : it.m_vertices) {
             maindraw.DrawSolidCircle({ it1.x,it1.y }, 0.5, { 0,0 }, { 1.0,0.0,0.0,1.0 });
         }
         maindraw.DrawSolidPolygon((Vec2*)it.m_vertices.data(), it.m_vertices.size(), { 1.0,0.0,1.0,1.0 });
-        tree->CreateProxy(it.GetAABB(), nullptr);
+        //tree->CreateProxy(it.GetAABB(), nullptr);
     }
 
     auto p1 = DividePolygonFromOrderVertexs(poly1.m_vertices);
@@ -155,42 +172,16 @@ void Draw() {
     for (auto it : p2) {
         maindraw.DrawSolidPolygon((Vec2*)it.data(), it.size(), { 0.0,1.0,1.0,1.0 });
     }
-
+    for (auto it : polyarr) {
+        maindraw.DrawSolidPolygon((Vec2*)it.m_vertices.data(), it.m_vertices.size(), { 0.133,0.69,0.29,1.0 });
+    }
+    if (drawoption.drawAABB) {
     for (auto box : tree->GetAllAABB()) {
       maindraw.DrawAABB((AABB*)(&box), {0.0,0.0,1.0,1.0});
     }
-    maindraw.Flush();
-}
-
-void mycode(GLFWwindow* window) {
-
-    poly1.m_vertices = { {10,10} ,{20,10},{20,20},{10,20} };
-    poly2.m_vertices = { {0,0} ,{-10,-10},{15,0},{-10,10},{-20,10} };
-
-    while (!glfwWindowShouldClose(window))
-    {
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        ImGui::Text("Hello, world %d", 123);
-        if (ImGui::Button("Save"))
-        {
-
-
-        }
-
-        char buf[10] = "name";
-        float f;
-        ImGui::InputText("string", buf, IM_ARRAYSIZE(buf));
-        ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        Draw();
-        glfwSwapBuffers(window);
-        glfwPollEvents();
     }
+
+    maindraw.Flush();
 }
 
 int main()
@@ -237,8 +228,37 @@ int main()
     ImGui_ImplOpenGL3_Init(glsl_version);
 
     glEnable(GL_DEPTH_TEST);
+
+
+    poly1.m_vertices = { {10,10} ,{20,10},{20,20},{10,20} };
+    poly2.m_vertices = { {0,0} ,{-10,-10},{15,0},{-10,10},{-20,10} };
+    for (int i = 0; i < 10; i++) {
+        struct Polygon p;
+        int num = rand()%5+3;
+        
+        for (int j = 0; j < num; j++) {
+            float x = (rand() % 10-5)+(i-5)*10+10;
+            float y = (rand() % 10-5)+(i-5)*10-10;
+            p.m_vertices.push_back({x,y});
+        }
+        polyarr.push_back(p);
+    }
     maindraw.Create();
-    mycode(window);
+    while (!glfwWindowShouldClose(window))
+    {
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        ImGui::Checkbox("show Dynamic Tree AABB",&drawoption.drawAABB);
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        Draw();
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

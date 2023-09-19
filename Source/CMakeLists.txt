@@ -5,8 +5,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 
-file(GLOB Polygon_HEAD ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
-file(GLOB Polygon_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+file(GLOB_RECURSE Polygon_HEAD ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+file(GLOB_RECURSE Polygon_SRC ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${Polygon_HEAD} ${Polygon_SRC})
 add_executable(${TARGET_NAME} ${Polygon_HEAD} ${Polygon_SRC})
 # Link dependencies    
 target_link_libraries(${TARGET_NAME} PUBLIC imgui)

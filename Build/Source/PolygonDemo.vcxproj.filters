@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\c++\PolygonDemo\Source\DebugDraw\DebugDraw.cpp">
+      <Filter>DebugDraw</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\c++\PolygonDemo\Source\Polygon\Dynamic_Tree.cpp">
+      <Filter>Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\c++\PolygonDemo\Source\Polygon\Polygon.cpp">
+      <Filter>Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\c++\PolygonDemo\Source\Polygon\Vertex.cpp">
+      <Filter>Polygon</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\c++\PolygonDemo\Source\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\c++\PolygonDemo\Source\DebugDraw\DebugDraw.h">
+      <Filter>DebugDraw</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\c++\PolygonDemo\Source\Polygon\Dynamic_Tree.h">
+      <Filter>Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\c++\PolygonDemo\Source\Polygon\Polygon.h">
+      <Filter>Polygon</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\c++\PolygonDemo\Source\Polygon\Vertex.h">
+      <Filter>Polygon</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\c++\PolygonDemo\Source\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DebugDraw">
+      <UniqueIdentifier>{F2BA309B-4CFC-3AEE-8500-222942AB2499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Polygon">
+      <UniqueIdentifier>{AB86F353-622B-3D85-BB94-7931F1B3AF91}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

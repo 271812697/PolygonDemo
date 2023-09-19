@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\c++\PolygonDemo\Build\CMakeFiles\766d04e4b5d8e1784261e48f5734bb17\update_mappings.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="E:\c++\PolygonDemo\Extern\glfw\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="E:\c++\PolygonDemo\Extern\glfw\src\mappings.h.in">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="E:\c++\PolygonDemo\Extern\glfw\CMake\GenerateMappings.cmake" />
+    <None Include="E:\c++\PolygonDemo\Build\Extern\glfw\src\CMakeFiles\update_mappings" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{0C534DE8-6B63-3DF1-AA7B-D8111094076F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2FE70320-5894-373D-AA82-DF29121D2CF4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
